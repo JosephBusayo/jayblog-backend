@@ -1,4 +1,4 @@
-/* import express from "express";
+import express from "express";
 import { verifyToken } from "../utils/verifyUser.js";
 import {
   createComment,
@@ -19,4 +19,3 @@ router.delete('/deleteComment/:commentId', verifyToken, deleteComment)
 router.get('/getcomments', verifyToken, getcomments)
 
 export default router;
- */

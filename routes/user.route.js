@@ -1,4 +1,4 @@
-/* import express from "express";
+import express from "express";
 import {
   deleteUser,
   signout,
@@ -19,4 +19,3 @@ router.get("/getusers", verifyToken, getUsers);
 router.get('/:userId', getUser)
 
 export default router;
- */

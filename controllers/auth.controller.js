@@ -10,17 +10,24 @@ import { errorHandler } from "../utils/error.js";
 export const signin = asyncHandler(async (req, res) => {
     const { email, password } = req.body
     const user = await User.findOne({ email })
+    const token = generateTOken(user._id)
 
     if (user && (await user.matchPassword(password))) {
-        res.json({
-            _id: user._id,
-            username: user.username,
-            profilePicture: user.profilePicture,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            createdAt: user.createdAt,
-            token: generateTOken(user._id),
-        })
+        res
+            .status(200)
+            .cookie("access_token", token, {
+                httpOnly: false,
+            })
+            .json({
+                _id: user._id,
+                username: user.username,
+                profilePicture: user.profilePicture,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                createdAt: user.createdAt,
+                token: token,
+            })
+
     } else {
         res.status(401)
         throw new Error('Invalid Email or Pasword')
@@ -46,7 +53,7 @@ export const signup = asyncHandler(async (req, res) => {
             username: user.username,
             email: user.email,
             profilePicture: user.profilePicture,
-            isAdmin: user.isAdmin,
+            isAdmin: true,
             token: generateTOken(user._id),
         })
     } else {
