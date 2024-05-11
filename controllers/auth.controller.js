@@ -62,8 +62,16 @@ export const signup = asyncHandler(async (req, res) => {
     }
 })
 
+export const signout = asyncHandler(async (req, res) => {
+    res.cookie("access_token", "", {
+        httpOnly: true,
+        expires: new Date(0),
+    });
 
-/* export const google = async (req, res, next) => {
+    res.status(200).json({ message: "Logged out successfully" });
+});
+
+export const google = async (req, res, next) => {
     const { name, email, googlePhotoUrl } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -103,4 +111,3 @@ export const signup = asyncHandler(async (req, res) => {
         next(error);
     }
 };
- */
